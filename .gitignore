@@ -1,1 +1,8 @@
+*.pyc
+.cache
+.coverage
+.idea/
+*.iml
 GildedRoseRequirements.txt
+.vscode
+coverage*
