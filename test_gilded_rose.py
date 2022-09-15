@@ -134,6 +134,25 @@ class GildedRoseTest(unittest.TestCase):
         self.assertEqual("Backstage passes to a TAFKAL80ETC concert", items[0].name)
         self.assertEqual(-1, items[0].sell_in)
         self.assertEqual(0, items[0].quality)
+        items = [Item("Backstage passes to a TAFKAL80ETC concert", 5, 10)]
+        gilded_rose = GildedRose(items)
+
+        gilded_rose.update_quality()
+
+        self.assertEqual("Backstage passes to a TAFKAL80ETC concert", items[0].name)
+        self.assertEqual(4, items[0].sell_in)
+        self.assertEqual(13, items[0].quality)
+
+    def test_backstage_passes_on_sell_by(self):
+        items = [Item("Backstage passes to a TAFKAL80ETC concert", 5, 10)]
+        gilded_rose = GildedRose(items)
+
+        for _ in range(5):
+            gilded_rose.update_quality()
+
+        self.assertEqual("Backstage passes to a TAFKAL80ETC concert", items[0].name)
+        self.assertEqual(0, items[0].sell_in)
+        self.assertEqual(25, items[0].quality)
 
     def test_backstage_passes_quality_maximum(self):
         items = [Item("Backstage passes to a TAFKAL80ETC concert", 6, 40)]
@@ -146,6 +165,39 @@ class GildedRoseTest(unittest.TestCase):
         self.assertEqual(1, items[0].sell_in)
         self.assertEqual(50, items[0].quality)
 
+    ############ Conjured Items Tests ############
+    def test_conjured_item_before_sell_by(self):
+        items = [Item("Conjured foo", 10, 10)]
+        gilded_rose = GildedRose(items)
+
+        gilded_rose.update_quality()
+
+        self.assertEqual("Conjured foo", items[0].name)
+        self.assertEqual(9, items[0].sell_in)
+        self.assertEqual(8, items[0].quality)
+
+    def test_conjured_item_after_sell_by(self):
+        items = [Item("Conjured foo", 2, 20)]
+        gilded_rose = GildedRose(items)
+
+        for _ in range(5):
+            gilded_rose.update_quality()
+
+        self.assertEqual("Conjured foo", items[0].name)
+        self.assertEqual(-3, items[0].sell_in)
+        self.assertEqual(4, items[0].quality)
+
+    def test_conjured_item_quality_minimum(self):
+        items = [Item("Conjured foo", 2, 15)]
+        gilded_rose = GildedRose(items)
+
+        for _ in range(5):
+            gilded_rose.update_quality()
+
+        self.assertEqual("Conjured foo", items[0].name)
+        self.assertEqual(-3, items[0].sell_in)
+        self.assertEqual(0, items[0].quality)
+    
     
     ############ Multiple Items Tests ############
     def test_multiple_items(self):
@@ -153,7 +205,8 @@ class GildedRoseTest(unittest.TestCase):
              Item(name="Aged Brie", sell_in=2, quality=0),
              Item(name="Elixir of the Mongoose", sell_in=5, quality=7),
              Item(name="Sulfuras, Hand of Ragnaros", sell_in=0, quality=80),
-             Item(name="Backstage passes to a TAFKAL80ETC concert", sell_in=5, quality=49)]
+             Item(name="Backstage passes to a TAFKAL80ETC concert", sell_in=5, quality=49),
+             Item(name="Apples (ConjurEd)", sell_in=2, quality=45)]
         gilded_rose = GildedRose(items)
 
         for _ in range(3):
@@ -180,6 +233,10 @@ class GildedRoseTest(unittest.TestCase):
         self.assertEqual("Backstage passes to a TAFKAL80ETC concert", items[4].name)
         self.assertEqual(2, items[4].sell_in)
         self.assertEqual(50, items[4].quality)
+
+        self.assertEqual("Apples (ConjurEd)", items[5].name)
+        self.assertEqual(-1, items[5].sell_in)
+        self.assertEqual(37, items[5].quality)
 
         
 if __name__ == '__main__':
