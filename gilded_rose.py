@@ -1,10 +1,9 @@
 # -*- coding: utf-8 -*-
 from ast import match_case
 import re
+import yaml
 
-###### Global Variables ######
-MAX_ITEM_QUALITY = 50
-##############################
+config = yaml.safe_load(open('config.yml'))
 
 class GildedRose(object):
 
@@ -17,14 +16,14 @@ class GildedRose(object):
         """
 
         for item in self.items:
-            match item.name :
-                case item.name if re.search("aged brie",item.name,re.IGNORECASE) :
+            match item.name:
+                case _ if "aged brie" in item.name.lower() :
                     self.__update_quality_aged_brie(item)
-                case item.name if re.search("backstage passes",item.name,re.IGNORECASE) :
+                case _ if "backstage passes" in item.name.lower() :
                     self.__update_quality_backstage_passes(item)
-                case item.name if re.search("sulfuras",item.name,re.IGNORECASE) :
+                case _ if "sulfuras" in item.name.lower() :
                     continue
-                case item.name if re.search("conjured",item.name,re.IGNORECASE) :
+                case _ if "conjured" in item.name.lower() :
                     self.__update_quality_conjured(item)
                 case _ :
                     self.__update_quality_regular(item)
@@ -49,11 +48,11 @@ class GildedRose(object):
             Quality increases by 1 before, and by 2 after sell by date
         """
 
-        if item.quality < MAX_ITEM_QUALITY:
+        if item.quality < config['max_item_quality']:
             if item.sell_in > 0:
                 item.quality += 1
             else:
-                item.quality = min(item.quality+2, MAX_ITEM_QUALITY)
+                item.quality = min(item.quality+2, config['max_item_quality'])
         item.sell_in -= 1
         return item
 
@@ -69,11 +68,11 @@ class GildedRose(object):
 
         match item.sell_in: 
             case item.sell_in if item.sell_in > 10 :
-                item.quality = min(item.quality+1,MAX_ITEM_QUALITY)
+                item.quality = min(item.quality+1,config['max_item_quality'])
             case item.sell_in if item.sell_in > 5 :
-                item.quality = min(item.quality+2,MAX_ITEM_QUALITY)
+                item.quality = min(item.quality+2,config['max_item_quality'])
             case item.sell_in if item.sell_in > 0 :
-                item.quality = min(item.quality+3,MAX_ITEM_QUALITY)
+                item.quality = min(item.quality+3,config['max_item_quality'])
             case _ :
                 item.quality = 0
         item.sell_in -= 1
@@ -93,6 +92,7 @@ class GildedRose(object):
         item.sell_in -= 1
         return item
 
+# Assignment requirement: Item class cannot be changed.
 class Item:
     def __init__(self, name, sell_in, quality):
         self.name = name

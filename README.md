@@ -1,13 +1,12 @@
-# HeadFWD assessment
+# Gilded Rose Kata
 
-We hebben voor jou een eigen groep aangemaakt op onze GitLab, hiervoor heb je een uitnodiging ontvangen. In deze groep kan je doen en laten wat je wilt, maar het is de bedoeling dat je hier de oplossingen deelt voor je opdrachten! Hier onder vind je alles wat je nodig hebt om aan de slag te gaan. Succes!!!
+The Gilded Rose Kata is a popular coding challenge that requires modifying an existing program that simulates the inventory management of a fictional item shop. The challenge involves adding new features to the program and refactoring the code to make it more maintainable and extensible. This Kata was originally created by Terry Hughes (http://twitter.com/TerryHughes) and can be found at https://github.com/NotMyself/GildedRose
 
-## Backend test
+# The Python version of the challenge
 
-De opdracht en verdere uitleg/specificaties van de opdracht kan je hier vinden:
+The Python version of the kata was translated by Emily Bache. https://github.com/emilybache/GildedRose-Refactoring-Kata
 
+The requirements for the assignment can be found at
 https://github.com/emilybache/GildedRose-Refactoring-Kata/blob/master/GildedRoseRequirements.txt
 
-De code om de oefening mee te starten kan je hier vinden (Java staat in de lijst):
-
-https://github.com/emilybache/GildedRose-Refactoring-Kata
+A copy of the requirements has been included in this repository.

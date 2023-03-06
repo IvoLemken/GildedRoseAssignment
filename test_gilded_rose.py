@@ -212,8 +212,6 @@ class GildedRoseTest(unittest.TestCase):
         for _ in range(3):
             gilded_rose.update_quality()
 
-        repr(items) #Mostly to get the coverage up to 100%
-
         self.assertEqual("+5 Dexterity Vest", items[0].name)
         self.assertEqual(7, items[0].sell_in)
         self.assertEqual(17, items[0].quality)
